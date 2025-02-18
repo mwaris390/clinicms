@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "PatientCheckUp" ADD COLUMN     "add_note" DOUBLE PRECISION NOT NULL DEFAULT 0.0;

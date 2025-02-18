@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                           String               @id @default(uuid())
+  fname                        String
+  lname                        String
+  email                        String               @unique
+  password                     String
+  created_at                   DateTime             @default(now())
+  updated_at                   DateTime             @updatedAt
+  created_by                   String
+  updated_by                   String
+  created_patients             Patient[]            @relation(name: "created_patients")
+  updated_patients             Patient[]            @relation(name: "updated_patients")
+  created_patients_appointment PatientAppointment[] @relation(name: "created_patients_appointment")
+  updated_patients_appointment PatientAppointment[] @relation(name: "updated_patients_appointment")
+
+  created_patients_patient_check_up PatientCheckUp[] @relation(name: "created_patients_patient_check_up")
+
+  updated_patients_patient_check_up PatientCheckUp[] @relation(name: "updated_patients_patient_check_up")
+}
+
+model Patient {
+  id                  String               @id @default(uuid())
+  patient_name        String
+  father_name         String?
+  age                 Int
+  cnic                String?
+  phone_no            String               @unique()
+  notes               String?
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @updatedAt
+  created_by          User                 @relation(name: "created_patients", fields: [created_user_id], references: [id], onDelete: NoAction)
+  created_user_id     String
+  updated_by          User                 @relation(name: "updated_patients", fields: [updated_user_id], references: [id], onDelete: NoAction)
+  updated_user_id     String
+  patient_appointment PatientAppointment[]
+  patient_checkup     PatientCheckUp[]
+}
+
+model PatientAppointment {
+  id                    String      @id @default(uuid())
+  patient_appointment   Patient     @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  patient_id            String
+  appointment_date_time DateTime
+  appointment_status    Appointment @default(Pending)
+  created_by            User        @relation(name: "created_patients_appointment", fields: [created_user_id], references: [id], onDelete: NoAction)
+  created_user_id       String
+  updated_by            User        @relation(name: "updated_patients_appointment", fields: [updated_user_id], references: [id], onDelete: NoAction)
+  updated_user_id       String
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @updatedAt
+}
+
+enum Appointment {
+  Pending
+  Fulfilled
+  Canceled
+}
+
+model PatientCheckUp {
+  id               String  @id @default(uuid())
+  patient_checkups Patient @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  patient_id       String
+  sphrd            Float   @default(0.0)
+  cylrd            Float   @default(0.0)
+  axisrd           Float   @default(0.0)
+  vard             Float   @default(0.0)
+  sphrn            Float   @default(0.0)
+  cylrn            Float   @default(0.0)
+  axisrn           Float   @default(0.0)
+  varn             Float   @default(0.0)
+  sphld            Float   @default(0.0)
+  cylld            Float   @default(0.0)
+  axisld           Float   @default(0.0)
+  vald             Float   @default(0.0)
+  sphln            Float   @default(0.0)
+  cylln            Float   @default(0.0)
+  axisln           Float   @default(0.0)
+  valn             Float   @default(0.0)
+  add_note         Float   @default(0.0)
+  remarks          String?
+  created_by       User    @relation(name: "created_patients_patient_check_up", fields: [created_user_id], references: [id], onDelete: NoAction)
+  created_user_id  String
+  updated_by       User    @relation(name: "updated_patients_patient_check_up", fields: [updated_user_id], references: [id], onDelete: NoAction)
+  updated_user_id  String
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @updatedAt
+}
