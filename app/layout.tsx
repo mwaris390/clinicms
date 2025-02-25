@@ -3,10 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-
-import { headers } from "next/headers";
 import Header from "./_components/header";
-
 import { Toaster } from "react-hot-toast";
 import { GetUser } from "@/lib/get_user";
 export const metadata: Metadata = {

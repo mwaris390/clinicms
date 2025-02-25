@@ -2,7 +2,6 @@
 
 import Loader from "@/app/_components/loader";
 import SubHeader from "@/app/_components/sub-header";
-import ToastDesc from "@/app/_components/toaster_description";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -15,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { AddUser, ReadSingleUser, UpdateUser } from "@/controller/user/data";
-import { useToast } from "@/hooks/use-toast";
 import { GetUser } from "@/lib/get_user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect, useParams } from "next/navigation";
@@ -27,19 +25,6 @@ import { z } from "zod";
 export default function CreateUser() {
   const [isPending, startTransition] = useTransition();
   let { id } = useParams();
-  // const [userId, setUserId] = useState(null);
-  // const [data, setData] = useState<
-  //   | {
-  //       id: string;
-  //       fname: string;
-  //       lname: string;
-  //       email: string;
-  //       password: string;
-  //     }
-  //   | null
-  //   | undefined
-  // >(null);
-
   let parseId: string | undefined;
   if (id) {
     parseId = id[0];
@@ -55,7 +40,6 @@ export default function CreateUser() {
       .string()
       .min(1, { message: "Email required" })
       .email("Incorrect Email"),
-    // password: z.string().min(1, { message: "Password required" }),
   });
 
   const extendedSchema = z

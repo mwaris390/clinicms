@@ -24,7 +24,6 @@ import {
 import { DeletePatient, ReadPatient } from "@/controller/patient/action";
 import { Pager } from "@/lib/pager";
 import {
-  CalendarClock,
   FileUser,
   PencilRuler,
   Stethoscope,

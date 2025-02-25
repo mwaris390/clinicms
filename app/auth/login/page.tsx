@@ -17,7 +17,6 @@ import { useTransition } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import toast from 'react-hot-toast';
-import { GetUser } from "@/lib/get_user";
 import { redirect } from "next/navigation";
 
 const formSchema = z.object({

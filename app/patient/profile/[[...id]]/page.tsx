@@ -3,7 +3,6 @@ import SubHeader from "@/app/_components/sub-header";
 import EyeScope from "@/app/_components/eye-scope";
 import PatientCard from "@/app/_components/patient-card";
 import { ReadSinglePatient } from "@/controller/patient/action";
-import ToastForServer from "@/app/_components/toaster_description";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -22,9 +21,6 @@ export default function Profile() {
     const result = await ReadSinglePatient(patientID || "");
     if (result.status) {
       setData(result.data);
-      console.log(result.data);
-
-      // toast.success(result.message);
     } else {
       toast.error(result.message);
     }
