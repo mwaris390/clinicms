@@ -1,4 +1,5 @@
 "use client";
+import BigLoader from "@/app/_components/big-loader";
 import Appointment from "@/app/_components/modal/appointment";
 import NoData from "@/app/_components/no-data";
 import SearchBar from "@/app/_components/search-bar";
@@ -43,6 +44,7 @@ type Patient = {
 };
 export default function PatientList() {
   const pager = new Pager();
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Patient[] | null>(null);
   const [currPage, setCurrPage] = useState<number>(pager.page);
   const [totalItems, setTotalItems] = useState<number>(pager.total);
@@ -55,6 +57,7 @@ export default function PatientList() {
   };
 
   async function FetchPatient(offset = currPage, limit = pager.perPage) {
+    setLoading(true);
     const result = await ReadPatient(offset - 1, limit, search);
     if (!result.status) {
       toast.error(result.message);
@@ -63,6 +66,7 @@ export default function PatientList() {
       setData(result.data as any);
       setTotalItems(Math.ceil((result.totalItems || 0) / pager.perPage));
     }
+    setLoading(false);
   }
 
   async function deletePatient(id: string) {
@@ -91,7 +95,7 @@ export default function PatientList() {
           <SearchBar listenSearchText={listenSearchText} />
         </div>
         <div className="relative mt-2 h-[65vh] overflow-y-auto  rounded-md shadow">
-          {data && data?.length > 0 && (
+          {!isLoading && data && data?.length > 0 && (
             <Table>
               <TableHeader className="sticky top-0 z-9">
                 <TableRow className="bg-customPrimary hover:bg-customPrimary">
@@ -153,7 +157,8 @@ export default function PatientList() {
               </TableBody>
             </Table>
           )}
-          {data == null || (data.length <= 0 && <NoData />)}
+          {data == null || (!isLoading && data.length <= 0 && <NoData />)}
+          {isLoading && <BigLoader />}
         </div>
         <div className="">
           <Pagination className="">

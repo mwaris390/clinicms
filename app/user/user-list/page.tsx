@@ -1,5 +1,6 @@
 "use client";
 
+import BigLoader from "@/app/_components/big-loader";
 import NoData from "@/app/_components/no-data";
 import SearchBar from "@/app/_components/search-bar";
 import SubHeader from "@/app/_components/sub-header";
@@ -30,6 +31,7 @@ import toast from "react-hot-toast";
 
 export default function UserList() {
   let pager = new Pager();
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const listenSearchText = async (val: string) => {
     setCurrPage(1);
@@ -50,14 +52,15 @@ export default function UserList() {
   const [currPage, setCurrPage] = useState<number>(pager.page);
 
   async function FetchUser(offset = currPage, limit = pager.perPage) {
+    setLoading(true)
     const result = await ReadUser(offset - 1, limit, search);
-
     if (!result.status) {
       toast.error(result.message);
     } else {
       setData(result.data as any);
       setTotalItems(Math.ceil((result.totalItems || 0) / pager.perPage));
     }
+    setLoading(false);
   }
 
   async function deleteUser(id: string) {
@@ -86,7 +89,7 @@ export default function UserList() {
           <SearchBar listenSearchText={listenSearchText} />
         </div>
         <div className="relative mt-2 h-[65vh] overflow-y-auto  rounded-md shadow">
-          {data.length > 0 && (
+          {!isLoading && data.length > 0 && (
             <Table>
               <TableHeader className="sticky top-0 z-10">
                 <TableRow className="bg-customPrimary hover:bg-customPrimary">
@@ -125,7 +128,8 @@ export default function UserList() {
               </TableBody>
             </Table>
           )}
-          {data.length <= 0 && <NoData />}
+          {!isLoading && data.length <= 0 && <NoData />}
+          {isLoading && <BigLoader />}
         </div>
         <div className="">
           <Pagination className="">
