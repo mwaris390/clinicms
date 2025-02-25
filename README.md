@@ -11,7 +11,7 @@
   - [Using the Application](#using-the-application)
 
 ## Introduction
-ClinicMS is a comprehensive **Clinic Management System** designed to streamline patient management, appointment scheduling, and medical record tracking. Built with modern web technologies, it offers multi-user access, real-time insights, and an intuitive user interface.
+ClinicMS is a comprehensive **Clinic Management System** designed to streamline patient management, appointment scheduling, and medical record tracking. Built with modern web technologies, it offers multi-user access, real-time insights, and an intuitive user interface. [**Link Here**](https://clinicms-puce.vercel.app/)
 
 ## Features
 - **Multi-User Access**: Role-based authentication for doctors, receptionists, and administrators.
