@@ -74,17 +74,6 @@ To set up **ClinicMS** locally, follow the instructions below.
 3. **Schedule Appointments**: Book and view upcoming appointments.
 4. **View Insights**: Navigate to the dashboard to analyze patient visit trends.
 
-## Deployment
-To deploy **ClinicMS** on Vercel:
-1. Install the Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
-2. Deploy the application:
-   ```bash
-   vercel
-   ```
-
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
