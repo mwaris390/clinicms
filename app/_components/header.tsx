@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 
-export default function header(user: {
+export default function Header(user: {
   user:
     | {
         message: string;
