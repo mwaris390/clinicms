@@ -30,7 +30,7 @@ import { z } from "zod";
 export default function CreatePatient() {
   const [isPending, startTransition] = useTransition();
   const [phoneExistBtn, setPhoneExistBtn] = useState({ id: "", status: false });
-  let { id } = useParams();
+  const { id } = useParams();
   let parseId: string | undefined;
   if (id) {
     parseId = id[0];

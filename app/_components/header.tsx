@@ -1,5 +1,4 @@
 "use client";
-import { GetUser } from "@/lib/get_user";
 import { usePathname } from "next/navigation";
 
 export default function header(user: {

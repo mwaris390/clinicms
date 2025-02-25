@@ -57,8 +57,6 @@ export default function AppointmentList() {
   async function FetchPendingAppointment() {
     const result = await ReadBookAppointment(selectedDate);
     if (result.status) {
-     
-
       setData(result.data);
     } else {
       toast.error(result.message);
@@ -165,6 +163,7 @@ export default function AppointmentList() {
           </ul>
         )}
         {data && data?.length <= 0 && <NoData />}
+        {isPending && ""}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export default function NoOfCheckUps() {
     },
   ]);
   function prevSevenDays() {
-    let arr: string[] = [];
+    const arr: string[] = [];
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);

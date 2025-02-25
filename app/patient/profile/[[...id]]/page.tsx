@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { PencilRuler } from "lucide-react";
 export default function Profile() {
-  let { id } = useParams();
+  const { id } = useParams();
   let patientID: string | undefined;
   if (id) {
     patientID = id[0];

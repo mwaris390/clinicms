@@ -30,7 +30,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function UserList() {
-  let pager = new Pager();
+  const pager = new Pager();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const listenSearchText = async (val: string) => {

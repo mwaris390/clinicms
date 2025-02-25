@@ -56,9 +56,9 @@ export default function CreateUser() {
       { message: "password must match", path: ["confirmPassword"] }
     );
 
-  let formSchema = z.intersection(baseSchema, extendedSchema);
+  const formSchema = z.intersection(baseSchema, extendedSchema);
 
-  let formSchema1 = baseSchema;
+  const formSchema1 = baseSchema;
 
   type FormType = z.infer<typeof formSchema>;
 

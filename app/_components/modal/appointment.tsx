@@ -5,13 +5,12 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CalendarClock, CalendarIcon, Copy } from "lucide-react";
+import { CalendarClock, CalendarIcon } from "lucide-react";
 import PatientCard from "../patient-card";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -86,7 +85,7 @@ export default function Appointment({
 
   function handleTimeChange(type: "hour" | "minute" | "ampm", value: string) {
     const currentDate = form.getValues("appointmentDate") || new Date();
-    let newDate = new Date(currentDate);
+    const newDate = new Date(currentDate);
 
     if (type === "hour") {
       const hour = parseInt(value, 10);

@@ -54,7 +54,7 @@ export default function PatientCheckUp() {
       }[]
   >();
   const [isPending, startTransition] = useTransition();
-  let { id } = useParams();
+  const { id } = useParams();
   let checkupId: string | undefined;
   let checkupToUpdateId: string | undefined;
   let isCheckUpUpdate: boolean | undefined = false;
@@ -64,7 +64,7 @@ export default function PatientCheckUp() {
       isCheckUpUpdate = id[1] == "true" ? true : false;
     }
   }
-  let baseSchema = z.object({
+  const baseSchema = z.object({
     patient: z.string().uuid({ message: "Patient must be selected" }),
     sphLD: z
       .string()
