@@ -34,7 +34,7 @@ function Login() {
     mode: "onBlur",
     defaultValues: {
       email: "saim01@gmail.com",
-      password: "12345678",
+      password: "",
     },
   });
 
