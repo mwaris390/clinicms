@@ -81,6 +81,13 @@
   }
 }
 
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari */
+    print-color-adjust: exact !important; /* Standard */
+  }
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -89,7 +96,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   appearance: textfield;
   -moz-appearance: textfield;
 }

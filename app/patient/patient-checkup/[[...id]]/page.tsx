@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/app/_components/loader";
+import PrintPatientCard from "@/app/_components/print-patient-card";
 import SubHeader from "@/app/_components/sub-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,7 +35,8 @@ import {
 import { GetUser } from "@/lib/get_user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setDate } from "date-fns";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, FileUser } from "lucide-react";
+import Link from "next/link";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -66,211 +68,25 @@ export default function PatientCheckUp() {
   }
   const baseSchema = z.object({
     patient: z.string().uuid({ message: "Patient must be selected" }),
-    sphLD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    cylLD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    axisLD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    vaLD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    sphLN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    cylLN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    axisLN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    vaLN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    sphRD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    cylRD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    axisRD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    vaRD: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    sphRN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    cylRN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    axisRN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
-    vaRN: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
+    sphLD: z.string().optional(),
+    cylLD: z.string().optional(),
+    axisLD: z.string().optional(),
+    vaLD: z.string().optional(),
+    sphLN: z.string().optional(),
+    cylLN: z.string().optional(),
+    axisLN: z.string().optional(),
+    vaLN: z.string().optional(),
+    sphRD: z.string().optional(),
+    cylRD: z.string().optional(),
+    axisRD: z.string().optional(),
+    vaRD: z.string().optional(),
+    sphRN: z.string().optional(),
+    cylRN: z.string().optional(),
+    axisRN: z.string().optional(),
+    vaRN: z.string().optional(),
     sideNote: z.string().optional(),
-    addNote: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          val === undefined ||
-          val.trim() === "" ||
-          /^[-+]?\d+(\.\d+)?$/.test(val),
-        {
-          message: "Invalid decimal number",
-        }
-      ),
+    addNoteL: z.string().optional(),
+    addNote: z.string().optional(),
   });
   type FormType = z.infer<typeof baseSchema>;
   const form = useForm<FormType>({
@@ -296,6 +112,7 @@ export default function PatientCheckUp() {
       vaRD: "",
       vaRN: "",
       addNote: "",
+      addNoteL: "",
     },
   });
   async function fetchPatient() {
@@ -337,6 +154,7 @@ export default function PatientCheckUp() {
             vaLN: String(value?.valn || ""),
             vaRD: String(value?.vard || ""),
             vaRN: String(value?.varn || ""),
+            addNoteL: String(value?.add_noteL || ""),
             addNote: String(value?.add_note || ""),
           });
           checkupToUpdateId = value?.id;
@@ -349,18 +167,26 @@ export default function PatientCheckUp() {
   }
 
   function onSubmit(values: FormType) {
-    console.log(values);
+    // console.log(values);
     startTransition(async () => {
       const user = await GetUser();
       if (!isCheckUpUpdate) {
-        const result = await PatientCheckup(
+        const result:any = await PatientCheckup(
           Object.assign(values, {
             created_user_id: user.data?.id || "",
             updated_user_id: user.data?.id || "",
           })
         );
+        console.log(result);
         if (result.status) {
           toast.success(result.message);
+          setPatientData({
+            patient_name: result.data.patient_checkups.patient_name,
+            patient_checkup: [result.data],
+          });
+          // setTimeout(() => {
+          //   triggerPrint?.();
+          // }, 5);
           form.reset({
             patient: values.patient,
           });
@@ -381,7 +207,6 @@ export default function PatientCheckUp() {
           redirect(`/patient/profile/${checkupId}`);
         } else {
           console.log(result);
-
           toast.error(result.message);
         }
       }
@@ -389,6 +214,8 @@ export default function PatientCheckUp() {
   }
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [patientData, setPatientData] = useState<any>(null);
+  const [triggerPrint, setTriggerPrint] = useState<() => void>();
   const [width, setWidth] = useState<string | null>(null);
   const didRun = useRef(false);
 
@@ -400,7 +227,10 @@ export default function PatientCheckUp() {
         setWidth(String(buttonRef.current.offsetWidth));
       }
     }
-  }, []);
+    if (patientData && triggerPrint) {
+      triggerPrint();
+    }
+  }, [patientData, triggerPrint]);
   return (
     <>
       <section>
@@ -421,7 +251,7 @@ export default function PatientCheckUp() {
                     <FormLabel className="basis-[30%]">
                       Patient<span className="text-red-500">*</span>
                     </FormLabel>
-                    <div className="basis-[70%]">
+                    <div className="basis-[70%] flex gap-x-1">
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -437,7 +267,11 @@ export default function PatientCheckUp() {
                               {field.value
                                 ? data?.find(
                                     (patient) => patient.id === field.value
-                                  )?.patient_name
+                                  )?.patient_name +
+                                  ", Phone No. " +
+                                  data?.find(
+                                    (patient) => patient.id === field.value
+                                  )?.phone_no
                                 : "Select Patient"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -450,7 +284,14 @@ export default function PatientCheckUp() {
                           <Command>
                             <CommandInput placeholder={`Search Patient...`} />
                             <CommandList>
-                              <CommandEmpty>No Patient found.</CommandEmpty>
+                              <CommandEmpty>
+                                No Patient found.{" "}
+                                <span className="text-customPrimary underline">
+                                  <Link href={"/create-patient"}>
+                                    Create Patient
+                                  </Link>
+                                </span>
+                              </CommandEmpty>
                               <CommandGroup>
                                 {data?.map((patient) => (
                                   <CommandItem
@@ -483,56 +324,59 @@ export default function PatientCheckUp() {
                       </Popover>
                       <FormDescription></FormDescription>
                       <FormMessage />
+                      {field.value && (
+                        <button>
+                          <Link
+                            href={`/patient/profile/${
+                              data?.find(
+                                (patient) => patient.id === field.value
+                              )?.id
+                            }`}
+                          >
+                            <FileUser size={28} className="stroke-tertiary" />
+                          </Link>
+                        </button>
+                      )}
                     </div>
                   </FormItem>
                 )}
               />
               <div className="flex items-center">
-                <FormLabel className="basis-[30%]">Right Eye</FormLabel>
+                <FormLabel className="basis-[30%]">EYE</FormLabel>
                 <div className="basis-[70%]">
-                  <table className="">
-                    <thead>
-                      <tr>
-                        <th className="border-2 border-tertiary"></th>
-                        <th className="border-2 border-tertiary text-sm">
-                          SPH (L/R)
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">
-                          CYL (L/R)
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">
-                          AXIS (L/R)
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">
-                          VA (L/R)
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border-2 border-tertiary font-bold text-[12px] w-[6rem] text-center">
-                          DIST.
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
-                            <FormField
-                              control={form.control}
-                              name="sphLD"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl className="">
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+                  <div className="flex gap-x-4">
+                    <table className="flex-1">
+                      <thead>
+                        <tr>
+                          <td
+                            className="border-2 border-tertiary font-bold text-center"
+                            colSpan={5}
+                          >
+                            OD
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="border-2 border-tertiary"></td>
+                          <td className="border-2 border-tertiary text-center ">
+                            SPH
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            CYL
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            AXIS
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            VA
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border-2 border-tertiary  text-center w-20">
+                            DIST.
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
                               name="sphRD"
@@ -543,7 +387,7 @@ export default function PatientCheckUp() {
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -551,39 +395,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
-                            <FormField
-                              control={form.control}
-                              name="cylLD"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
                               name="cylRD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -591,39 +415,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
-                            <FormField
-                              control={form.control}
-                              name="axisLD"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
                               name="axisRD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -631,39 +435,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
-                            <FormField
-                              control={form.control}
-                              name="vaLD"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
                               name="vaRD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -671,18 +455,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-2 border-tertiary font-bold text-[12px] w-[6rem] text-center">
-                          NEAR.
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="border-2 border-tertiary w-20 text-center ">
+                            ADD.
+                          </td>
+                          <td
+                            className="border-2 border-tertiary w-20"
+                            colSpan={5}
+                          >
                             <FormField
                               control={form.control}
-                              name="sphLN"
+                              name="addNote"
                               render={({ field }) => (
                                 <FormItem>
                                   <FormControl className="">
@@ -690,7 +475,7 @@ export default function PatientCheckUp() {
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -698,9 +483,46 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table className="flex-1">
+                      <thead>
+                        <tr>
+                          <td
+                            className="border-2 border-tertiary font-bold text-center"
+                            colSpan={5}
+                          >
+                            OS
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="border-2 border-tertiary"></td>
+                          <td className="border-2 border-tertiary text-center ">
+                            SPH
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            CYL
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            AXIS
+                          </td>
+                          <td className="border-2 border-tertiary text-center ">
+                            VA
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border-2 border-tertiary  text-center w-20">
+                            DIST.
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
-                              name="sphRN"
+                              name="sphLD"
                               render={({ field }) => (
                                 <FormItem>
                                   <FormControl className="">
@@ -708,7 +530,7 @@ export default function PatientCheckUp() {
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -716,21 +538,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
-                              name="cylLN"
+                              name="cylLD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -738,17 +558,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
-                              name="cylRN"
+                              name="axisLD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -756,21 +578,19 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
+                          </td>
+                          <td className="border-2 border-tertiary w-20">
                             <FormField
                               control={form.control}
-                              name="axisLN"
+                              name="vaLD"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -778,17 +598,27 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="border-2 border-tertiary w-20 text-center ">
+                            ADD.
+                          </td>
+                          <td
+                            className="border-2 border-tertiary w-20"
+                            colSpan={5}
+                          >
                             <FormField
                               control={form.control}
-                              name="axisRN"
+                              name="addNoteL"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormControl>
+                                  <FormControl className="">
                                     <Input
                                       className="placeholder:text-center"
                                       placeholder="--"
                                       {...field}
-                                      type="number"
+                                      type="text"
                                     />
                                   </FormControl>
                                   <FormDescription></FormDescription>
@@ -796,275 +626,14 @@ export default function PatientCheckUp() {
                                 </FormItem>
                               )}
                             />
-                          </div>
-                        </td>
-                        <td className="border-2 border-tertiary w-[12rem]">
-                          <div className="flex gap-x-1">
-                            <FormField
-                              control={form.control}
-                              name="vaLN"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control}
-                              name="vaRN"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Input
-                                      className="placeholder:text-center"
-                                      placeholder="--"
-                                      {...field}
-                                      type="number"
-                                    />
-                                  </FormControl>
-                                  <FormDescription></FormDescription>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-2 border-tertiary font-bold text-[12px] w-[6rem] text-center">
-                          ADD.
-                        </td>
-                        <td
-                          className="border-2 border-tertiary w-[12rem]"
-                          colSpan={4}
-                        >
-                          <FormField
-                            control={form.control}
-                            name="addNote"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-              {/* <div className="flex items-center">
-                <FormLabel className="basis-[30%]">Left Eye</FormLabel>
-                <div className="basis-[70%]">
-                  <table className="">
-                    <thead>
-                      <tr>
-                        <th className="border-2 border-tertiary"></th>
-                        <th className="border-2 border-tertiary text-sm">
-                          SPH
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">
-                          CYL
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">
-                          AXIS
-                        </th>
-                        <th className="border-2 border-tertiary text-sm">VA</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border-2 border-tertiary font-bold text-[12px]  w-[6rem] text-center">
-                          DIST.
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="sphLD"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="cylLD"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="axisLD"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="vaLD"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-2 border-tertiary font-bold text-[12px]  w-[6rem] text-center">
-                          NEAR.
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="sphLN"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="cylLN"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="axisLN"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                        <td className="border-2 border-tertiary w-[6rem]">
-                          <FormField
-                            control={form.control}
-                            name="vaLN"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    className="placeholder:text-center"
-                                    placeholder="--"
-                                    {...field}
-                                    type="number"
-                                  />
-                                </FormControl>
-                                <FormDescription></FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div> */}
+
               <FormField
                 control={form.control}
                 name="sideNote"
@@ -1107,6 +676,13 @@ export default function PatientCheckUp() {
               </div>
             </form>
           </FormProvider>
+          {patientData && (
+            <PrintPatientCard
+              patientData={patientData}
+              showIcon={false}
+              printCallByParent={(fn) => setTriggerPrint(() => fn)}
+            />
+          )}
         </div>
       </section>
     </>

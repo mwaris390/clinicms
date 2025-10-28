@@ -5,11 +5,14 @@ import PatientCard from "@/app/_components/patient-card";
 import { ReadSinglePatient } from "@/controller/patient/action";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NoData from "@/app/_components/no-data";
 import { format } from "date-fns";
 import Link from "next/link";
 import { PencilRuler } from "lucide-react";
+import PrintPatientCard from "@/app/_components/print-patient-card";
+import "react-to-print";
+
 export default function Profile() {
   const { id } = useParams();
   let patientID: string | undefined;
@@ -17,6 +20,7 @@ export default function Profile() {
     patientID = id[0];
   }
   const [data, setData] = useState<any | null>(null);
+
   async function FetchRecord() {
     const result = await ReadSinglePatient(patientID || "");
     if (result.status) {
@@ -55,15 +59,24 @@ export default function Profile() {
                             {format(checkup.created_at, "PPPpp")}
                           </h2>
                         </div>
-                        <button>
-                          <Link
-                            href={`/patient/patient-checkup/${patientID}/true/${checkup.id}`}
-                          >
-                            <PencilRuler className="stroke-customPrimary" />
-                          </Link>
-                        </button>
+                        <div className="flex gap-x-6">
+                          <PrintPatientCard
+                            patientData={{
+                              patient_name: data.patient_name,
+                              patient_checkup: [checkup],
+                            }}
+                            showIcon={true}
+                          />
+                          <button>
+                            <Link
+                              href={`/patient/patient-checkup/${patientID}/true/${checkup.id}`}
+                            >
+                              <PencilRuler className="stroke-customPrimary" />
+                            </Link>
+                          </button>
+                        </div>
                       </div>
-                      <EyeScope tableName="Left / Right" data={checkup} />
+                      <EyeScope tableName="" data={checkup} />
                       <div className="capitalize">
                         <span className="font-semibold me-2 ">Extra Note:</span>
                         {checkup.remarks}

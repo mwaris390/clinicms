@@ -33,7 +33,7 @@ function Login() {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      email: "admin01@vercel.com",
+      email: "saim01@gmail.com",
       password: "12345678",
     },
   });

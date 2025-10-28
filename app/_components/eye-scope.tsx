@@ -13,9 +13,128 @@ export default function EyeScope({
   return (
     <>
       <div className="flex flex-col items-center my-8">
-        <label className="basis-[30%] font-bold">{`${tableName} Eye`}</label>
+        <label className="basis-[30%] font-bold my-4">{`${tableName} Eye Data`}</label>
         <div className="basis-[70%]">
-          <table className="">
+          <div className="basis-[70%]">
+            <div className="flex gap-x-4">
+              {/* OD Table */}
+              <table className="flex-1">
+                <thead>
+                  <tr>
+                    <td
+                      className="border-2 border-tertiary font-bold text-center"
+                      colSpan={5}
+                    >
+                      OD
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-tertiary"></td>
+                    <td className="border-2 border-tertiary text-center">
+                      SPH
+                    </td>
+                    <td className="border-2 border-tertiary text-center">
+                      CYL
+                    </td>
+                    <td className="border-2 border-tertiary text-center">
+                      AXIS
+                    </td>
+                    <td className="border-2 border-tertiary text-center">VA</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border-2 border-tertiary text-center w-20 px-2">
+                      DIST.
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.sphrd)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.cylrd)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.axisrd)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.vard)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-tertiary text-center w-20 px-2">
+                      ADD.
+                    </td>
+                    <td
+                      className="border-2 border-tertiary w-20 px-2 text-center"
+                      colSpan={4}
+                    >
+                      {returnValidValue(data.add_note)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              {/* OS Table */}
+              <table className="flex-1">
+                <thead>
+                  <tr>
+                    <td
+                      className="border-2 border-tertiary font-bold text-center"
+                      colSpan={5}
+                    >
+                      OS
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-tertiary"></td>
+                    <td className="border-2 border-tertiary text-center">
+                      SPH
+                    </td>
+                    <td className="border-2 border-tertiary text-center">
+                      CYL
+                    </td>
+                    <td className="border-2 border-tertiary text-center">
+                      AXIS
+                    </td>
+                    <td className="border-2 border-tertiary text-center">VA</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border-2 border-tertiary text-center w-20 px-2">
+                      DIST.
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.sphld)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.cylld)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.axisld)}
+                    </td>
+                    <td className="border-2 border-tertiary w-20 px-2 text-center">
+                      {returnValidValue(data.vald)}
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td className="border-2 border-tertiary text-center w-20 px-2">
+                      ADD.
+                    </td>
+                    <td
+                      className="border-2 border-tertiary w-20 px-2 text-center"
+                      colSpan={4}
+                    >
+                      {returnValidValue(data.add_noteL)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* <table className="">
             <thead>
               <tr>
                 <th className="border-2 border-tertiary"></th>
@@ -112,7 +231,7 @@ export default function EyeScope({
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
         </div>
       </div>
     </>

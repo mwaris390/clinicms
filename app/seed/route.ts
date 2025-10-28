@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const result = await AddUser({
       fname: "saim",
-      lname: "younus",
+      lname: "younis",
       email: "saim01@gmail.com",
       password: "12345678",
     });

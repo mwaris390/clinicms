@@ -72,23 +72,23 @@ export async function AddPatient({
   } else {
     try {
       const dbResult = await prisma.$transaction(async (prisma) => {
-        const isPhoneExist = await prisma.patient.findUnique({
-          where: {
-            phone_no: phone,
-          },
-          select: {
-            id: true,
-            updated_at: true,
-            updated_by: true,
-          },
-        });
-        if (isPhoneExist) {
-          return {
-            message: "Phone No already Exist.",
-            data: isPhoneExist,
-            status: false,
-          };
-        } else {
+        // const isPhoneExist = await prisma.patient.findUnique({
+        //   where: {
+        //     phone_no: phone,
+        //   },
+        //   select: {
+        //     id: true,
+        //     updated_at: true,
+        //     updated_by: true,
+        //   },
+        // });
+        // if (isPhoneExist) {
+        //   return {
+        //     message: "Phone No already Exist.",
+        //     data: isPhoneExist,
+        //     status: false,
+        //   };
+        // } else {
           const result = await prisma.patient.create({
             data: {
               patient_name: patientName,
@@ -111,7 +111,7 @@ export async function AddPatient({
             data: result,
             status: true,
           };
-        }
+        // }
       });
       return dbResult;
     } catch (error) {

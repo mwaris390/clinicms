@@ -39,7 +39,7 @@ model Patient {
   father_name         String?
   age                 Int
   cnic                String?
-  phone_no            String               @unique()
+  phone_no            String               
   notes               String?
   created_at          DateTime             @default(now())
   updated_at          DateTime             @updatedAt
@@ -75,23 +75,24 @@ model PatientCheckUp {
   id               String  @id @default(uuid())
   patient_checkups Patient @relation(fields: [patient_id], references: [id], onDelete: Cascade)
   patient_id       String
-  sphrd            Float   @default(0.0)
-  cylrd            Float   @default(0.0)
-  axisrd           Float   @default(0.0)
-  vard             Float   @default(0.0)
-  sphrn            Float   @default(0.0)
-  cylrn            Float   @default(0.0)
-  axisrn           Float   @default(0.0)
-  varn             Float   @default(0.0)
-  sphld            Float   @default(0.0)
-  cylld            Float   @default(0.0)
-  axisld           Float   @default(0.0)
-  vald             Float   @default(0.0)
-  sphln            Float   @default(0.0)
-  cylln            Float   @default(0.0)
-  axisln           Float   @default(0.0)
-  valn             Float   @default(0.0)
-  add_note         Float   @default(0.0)
+  sphrd            String   @default("0.0")
+  cylrd            String   @default("0.0")
+  axisrd           String   @default("0.0")
+  vard             String   @default("0.0")
+  sphrn            String   @default("0.0")
+  cylrn            String   @default("0.0")
+  axisrn           String   @default("0.0")
+  varn             String   @default("0.0")
+  sphld            String   @default("0.0")
+  cylld            String   @default("0.0")
+  axisld           String   @default("0.0")
+  vald             String   @default("0.0")
+  sphln            String   @default("0.0")
+  cylln            String   @default("0.0")
+  axisln           String   @default("0.0")
+  valn             String   @default("0.0")
+  add_note         String   @default("0.0")
+  add_noteL         String   @default("0.0")
   remarks          String?
   created_by       User    @relation(name: "created_patients_patient_check_up", fields: [created_user_id], references: [id], onDelete: NoAction)
   created_user_id  String

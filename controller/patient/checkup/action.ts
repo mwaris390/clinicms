@@ -6,200 +6,25 @@ import { z } from "zod";
 
 let baseSchema = z.object({
   patient: z.string().uuid({ message: "Patient must be selected" }),
-  sphLD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  cylLD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  axisLD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  vaLD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  sphLN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  cylLN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  axisLN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  vaLN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  sphRD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  cylRD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  axisRD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  vaRD: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  sphRN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  cylRN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  axisRN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
-  vaRN: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === undefined ||
-        val.trim() === "" ||
-        /^[-+]?\d+(\.\d+)?$/.test(val),
-      {
-        message: "Invalid decimal number",
-      }
-    ),
+  sphLD: z.string().optional(),
+  cylLD: z.string().optional(),
+  axisLD: z.string().optional(),
+  vaLD: z.string().optional(),
+  sphLN: z.string().optional(),
+  cylLN: z.string().optional(),
+  axisLN: z.string().optional(),
+  vaLN: z.string().optional(),
+  sphRD: z.string().optional(),
+  cylRD: z.string().optional(),
+  axisRD: z.string().optional(),
+  vaRD: z.string().optional(),
+  sphRN: z.string().optional(),
+  cylRN: z.string().optional(),
+  axisRN: z.string().optional(),
+  vaRN: z.string().optional(),
   sideNote: z.string().optional(),
-  addNote: z
+  addNote: z.string().optional(),
+  addNoteL: z
     .string()
     .optional()
     .refine(
@@ -219,7 +44,7 @@ function convertStringToFloat(val: string | undefined) {
   if (val === undefined || val.trim() === "") {
     // return undefined;
   } else {
-    return parseFloat(val);
+    return val;
   }
 }
 export async function PatientCheckup(values: FormType) {
@@ -265,24 +90,38 @@ export async function PatientCheckup(values: FormType) {
             patient_id: values.patient,
             remarks: values.sideNote,
             axisld: convertStringToFloat(values.axisLD),
-            axisln: convertStringToFloat(values.axisLN),
+            // axisln: convertStringToFloat(values.axisLN),
             axisrd: convertStringToFloat(values.axisRD),
-            axisrn: convertStringToFloat(values.axisRN),
+            // axisrn: convertStringToFloat(values.axisRN),
             cylld: convertStringToFloat(values.cylLD),
-            cylln: convertStringToFloat(values.cylLN),
+            // cylln: convertStringToFloat(values.cylLN),
             cylrd: convertStringToFloat(values.cylRD),
-            cylrn: convertStringToFloat(values.cylRN),
+            // cylrn: convertStringToFloat(values.cylRN),
             sphld: convertStringToFloat(values.sphLD),
-            sphln: convertStringToFloat(values.sphLN),
+            // sphln: convertStringToFloat(values.sphLN),
             sphrd: convertStringToFloat(values.sphRD),
-            sphrn: convertStringToFloat(values.sphRN),
+            // sphrn: convertStringToFloat(values.sphRN),
             vald: convertStringToFloat(values.vaLD),
-            valn: convertStringToFloat(values.vaLN),
+            // valn: convertStringToFloat(values.vaLN),
             vard: convertStringToFloat(values.vaRD),
-            varn: convertStringToFloat(values.vaRN),
+            // varn: convertStringToFloat(values.vaRN),
             add_note: convertStringToFloat(values.addNote),
+            add_noteL: convertStringToFloat(values.addNoteL),
             created_user_id: values.created_user_id,
             updated_user_id: values.updated_user_id,
+          },
+          include: {
+            created_by: {
+              select: {
+                fname: true,
+                lname: true,
+              },
+            },
+            patient_checkups: {
+              select: {
+                patient_name: true,
+              },
+            },
           },
         });
         return {
@@ -332,6 +171,7 @@ export async function UpdatePatientCheckup(values: UpdatedFormType) {
           vard: convertStringToFloat(values.vaRD),
           varn: convertStringToFloat(values.vaRN),
           add_note: convertStringToFloat(values.addNote),
+          add_noteL: convertStringToFloat(values.addNoteL),
           created_user_id: values.created_user_id,
           updated_user_id: values.updated_user_id,
         },

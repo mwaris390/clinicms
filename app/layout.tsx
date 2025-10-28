@@ -29,11 +29,11 @@ export default async function RootLayout({
             <Header user={user} />
             {children}
             <Toaster
-              position="bottom-center"
+              position="top-right"
               toastOptions={{
                 duration: 2500,
                 style: {
-                  background: "#7ca6f333",
+                  background: "#7ca6f",
                   color: "#7063d3",
                   fontWeight: "bold",
                 },

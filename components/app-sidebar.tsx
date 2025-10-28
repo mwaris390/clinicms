@@ -34,7 +34,8 @@ import {
 import { redirect, usePathname } from "next/navigation";
 import { Logout } from "@/lib/logout";
 import toast from "react-hot-toast";
-
+import Logo from "@/public/waqar-logo.svg";
+import Image from "next/image";
 const userItems = [
   {
     title: "Users Lists",
@@ -87,8 +88,11 @@ export function AppSidebar() {
                   className="bg-customPrimary text-white hover:bg-customPrimary hover:text-white"
                 >
                   <Link href="/">
-                    <Hospital strokeWidth={3} />
-                    <span className="font-bold text-xl">ClinicMS.</span>
+                    {/* <Hospital strokeWidth={3} /> */}
+                    <Image src={Logo} className="w-[50px]" alt="logo" />
+                    <span className="font-bold text-[14px]">
+                      Waqar Optical Center.
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
