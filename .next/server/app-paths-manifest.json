@@ -1,0 +1,13 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/seed/route": "app/seed/route.js",
+  "/page": "app/page.js",
+  "/patient/create-patient/[[...id]]/page": "app/patient/create-patient/[[...id]]/page.js",
+  "/patient/profile/[[...id]]/page": "app/patient/profile/[[...id]]/page.js",
+  "/patient/patient-list/page": "app/patient/patient-list/page.js",
+  "/patient/patient-checkup/[[...id]]/page": "app/patient/patient-checkup/[[...id]]/page.js",
+  "/user/create-user/[[...id]]/page": "app/user/create-user/[[...id]]/page.js",
+  "/user/user-list/page": "app/user/user-list/page.js",
+  "/auth/login/page": "app/auth/login/page.js"
+}

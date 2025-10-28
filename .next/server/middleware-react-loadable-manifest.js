@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app/_components/no-of-checkups.tsx -> react-apexcharts":{"id":2242,"files":["static/chunks/477d4af2.b5c366f975350358.js","static/chunks/242.8e488d4073ed42aa.js"]}}';
